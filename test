@@ -1,1 +1,92 @@
-print "Test"
+from sys import argv
+script , pic = argv
+import Image
+im = Image.open(pic)
+print im.format, im.size, im.mode
+
+size_x , size_y = im.size
+
+
+def size_list(size_x , size_y):
+	x=0
+	size_x_list = [x]
+	while x < size_x:
+		size_x_list.append(x)
+		x += 1
+		
+	y=0
+	size_y_list = [y]
+	while y < size_y:
+		size_y_list.append(y)
+		y += 1
+		
+	return (size_x_list , size_y_list)
+	
+(final_x_size , final_y_size) =size_list(size_x , size_y)
+
+def point_1_check(final_x_size , final_y_size):
+	for ycor in final_y_size:
+		for xcor in final_x_size:
+			point_1 = (xcor , ycor)
+			turkey = im.getpixel(point_1)
+			if turkey == (0,0,0):
+				value1 = 6 #6 will be replaced later with variables
+				point_2_check(xcor , ycor, value1)
+
+def point_2_check(xcor,ycor,value1):
+	xcor2 = xcor +1 #1 will be replaced by the actual distance of in game shape
+	point_2 = (xcor2 , ycor)
+	point_2_color = im.getpixel(point_2)
+	if point_2_color == (0,0,0):
+		value2 = value1 + 6
+		point_3_check(xcor2 , ycor , value2)
+	else:
+		print "not found 2"
+	
+	
+def point_3_check(xcor2 , ycor, value2):
+	xcor3 = xcor2 + 1
+	point_3 = (xcor3 , ycor)
+	point_3_color = im.getpixel(point_3)
+	if point_3_color == (0,0,0):
+		value3 = value2 + 6
+		point_4_check(xcor3 , ycor , value3)
+	else:
+		print "not found 3"
+	
+def point_4_check(xcor3 , ycor , value3):
+	ycor2 = ycor - 1
+	point_4 = (xcor3, ycor2)
+	point_4_color = im.getpixel(point_4)
+	if point_4_color == (0,0,0):
+		value4 = value3 + 6
+		point_5_check(xcor3 , ycor2 , value4)
+	else:
+		print "not found 4"
+		
+def point_5_check(xcor3 , ycor2 , value4):
+	xcor2 = xcor3 - 1
+	point_5 = (xcor2 , ycor2)
+	point_5_color = im.getpixel(point_5)
+	if point_5_color == (0,0,0):
+		value5 = value4 + 6 
+		point_6_check(xcor2 , ycor2 , value5)
+	else:
+		print "not found 5"
+		
+def point_6_check(xcor2 , ycor2 , value5):
+	xcor = xcor2 - 1
+	point_6 = (xcor , ycor2)
+	point_6_color = im.getpixel(point_6)
+	if point_6_color == (0,0,0):
+		value6 = value5 + 6
+	else:
+		print "not found 6"
+	
+
+#Need to make it so it does point check 3-6 even if it doesn't satisfy IF statement
+#Can pass on xcor and ycor since it comes from simple math and doesn't come from initial FOR statement
+#Take point checks 3-6 out of IF statement
+	
+point_1_check(final_x_size , final_y_size)
+
